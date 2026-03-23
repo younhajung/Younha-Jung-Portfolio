@@ -1,0 +1,203 @@
+/* 1. 기본 설정 초기화 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 2. 배경색 변경 (검은색 -> 포트폴리오에 어울리는 밝은 톤) */
+body {
+    background-color: #f8f9fa; /* 포트폴리오 배경과 비슷한 아주 밝은 회색/흰색 */
+    color: #333;
+    font-family: 'Pretendard', sans-serif;
+}
+
+/* 3. 기본 헤더와 푸터 숨기기 (이미지가 다 해주니까요!) */
+header, footer {
+    display: none;
+}
+
+/* 4. 포트폴리오 레이아웃 (이음새 없애기) */
+#portfolio-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    /* 화면을 더 넓게 써서 시원하게 보여줍니다 */
+    max-width: 1400px; 
+    margin: 0 auto;
+    /* 이미지 사이의 간격을 없애서 스크롤 시 하나의 긴 웹페이지처럼 보이게 합니다 */
+    gap: 0; 
+}
+
+/* 5. 개별 이미지 블록 (여백 완벽 제거) */
+.portfolio-item {
+    width: 100%;
+    /* 이미지 하단에 생기는 미세한 공백을 제거하는 꿀팁 */
+    line-height: 0; 
+    font-size: 0;
+    
+    /* 애니메이션 효과 (조금 더 부드럽게) */
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.portfolio-item.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 6. 이미지 설정 */
+img {
+    width: 100%;
+    height: auto;
+    display: block;
+    /* 이음새가 자연스럽도록 테두리 둥글기를 없앱니다 */
+    border-radius: 0; 
+    /* 이미지에 아주 옅은 그림자를 줘서 종이 질감 느낌을 살릴 수도 있습니다 (선택) */
+    /* box-shadow: 0 4px 20px rgba(0,0,0,0.03); */
+}
+/* 위로 가기 버튼 디자인 */
+#topBtn {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    z-index: 99; /* 다른 이미지들보다 무조건 위에 오도록 설정 */
+    border: none;
+    background-color: #007bff; /* BLUE.mov 테마에 맞춘 차분한 푸른색 */
+    color: white;
+    cursor: pointer;
+    padding: 14px 24px;
+    border-radius: 50px; /* 알약 모양으로 동글동글하게 */
+    font-size: 16px;
+    font-family: 'Pretendard', sans-serif;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* 살짝 떠 있는 듯한 그림자 */
+    
+    /* 나타나고 사라지는 애니메이션 */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.4s ease-out;
+}
+
+/* 스크롤을 내려서 버튼이 활성화되었을 때 */
+#topBtn.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* 버튼에 마우스 올렸을 때 살짝 위로 들리는 효과 */
+#topBtn:hover {
+    background-color: #0065bd;
+    transform: translateY(-5px);
+}
+/* 투명 클릭 상자 공통 스타일 */
+.contact-hover-box {
+    position: absolute;
+    right: 7%; /* 오른쪽에서 떨어진 거리 */
+    width: 15%; /* 클릭 영역의 너비 */
+    height: 3%; /* 클릭 영역의 높이 */
+    cursor: pointer;
+    z-index: 10;
+    
+    /* 💡 팁: 위치를 맞출 때는 아래 빨간색 배경의 주석(/*...*/)을 지우고 눈으로 보면서 숫자를 조절하세요! 맞춘 뒤에 다시 지우면 됩니다. */
+    /* background-color: rgba(255, 0, 0, 0.3); */
+}
+
+/* 전화번호 상자 위치 (아래에서부터의 거리) */
+.phone-box {
+    bottom: 16%; 
+}
+
+/* 이메일 상자 위치 */
+.email-box {
+    bottom: 13.5%; 
+}
+
+/* 마우스를 올렸을 때 직관적으로 알 수 있게 살짝 빛나는 효과 */
+.contact-hover-box:hover {
+    background-color: rgba(255, 255, 255, 0.537); 
+    border-radius: 3px;
+    transition: background-color 0.3s ease;
+}
+/* =========================================
+   1. 커스텀 마우스 커서 디자인
+========================================= */
+/* 웹사이트 전체에서 기본 마우스 화살표 숨기기 */
+body {
+    cursor: none;
+}
+
+/* 버튼이나 링크에 올려도 손가락 모양 안 보이게 강제 설정 */
+a, button, .contact-hover-box, .folder-box {
+    cursor: none !important;
+}
+
+#custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 14px;
+    height: 14px;
+    background-color: #007bff; /* BLUE.mov 컨셉 파란색 */
+    border-radius: 50%;
+    pointer-events: none; /* 커서 자체가 클릭을 방해하지 않도록 설정 */
+    z-index: 9999; /* 무조건 제일 위에 보이게 */
+    transform: translate(-50%, -50%); /* 마우스 정중앙에 위치 */
+    transition: width 0.2s ease, height 0.2s ease, background-color 0.2s ease, border 0.2s ease;
+}
+
+/* 클릭할 수 있는 곳에 올렸을 때 커서가 커지는(포커스) 효과 */
+#custom-cursor.hover {
+    width: 36px;
+    height: 36px;
+    background-color: #007bff(127, 43, 176, 0.2); /* 안쪽은 투명하게 */
+    border: 2px solid #007bff; /* 겉에 테두리 생성 */
+}
+
+/* =========================================
+   2. 목차(Contents) 폴더 투명 클릭 상자
+========================================= */
+.folder-box {
+    position: absolute;
+    top: 33%; /* 폴더의 세로 위치 (위에서부터의 거리) */
+    width: 15%; /* 클릭 영역 너비 */
+    height: 25%; /* 클릭 영역 높이 */
+    z-index: 10;
+    
+    /* 💡 팁: 아래 빨간색 배경 주석을 지우고 위치를 눈으로 보면서 숫자를 맞추세요! */
+    /* background-color: rgba(255, 0, 0, 0.3); */
+}
+
+/* 각 폴더별 가로 위치 (왼쪽에서부터의 거리) */
+.folder-art { left: 18.5%; }
+.folder-edit { left: 42.5%; }
+.folder-motion { left: 66.5%; }
+
+/* 폴더에 마우스 올렸을 때 은은하게 빛나는 효과 */
+.folder-box:hover {
+    background-color: rgba(75, 75, 75, 0.2);
+    border-radius: 12px;
+    transition: background-color 0.3s ease;
+}
+/* 상단 스크롤 진행바 디자인 */
+#progress-bar-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px; /* 바의 두께 */
+    background-color: rgba(255, 255, 255, 0.3); /* 안 채워진 부분 (투명한 흰색) */
+    z-index: 9999;
+}
+
+#progress-bar {
+    width: 0%;
+    height: 100%;
+    background-color: #007bff; /* BLUE.mov 포인트 파란색 */
+    /* 영상 재생 바처럼 끝부분에 살짝 빛나는 효과 (선택) */
+    box-shadow: 0 0 8px #0065bd(43, 108, 176, 0.8); 
+}
